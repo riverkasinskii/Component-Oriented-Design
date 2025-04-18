@@ -465,7 +465,7 @@ MonoBehaviour:
   _tossCooldown: 3
   _entityCollisionFacade: {fileID: 4060714419797054390}
   _audioSource: {fileID: 7373436372039092287}
-  _audioClip: {fileID: 8300000, guid: 49fd8f26329a7d447b6232131cfd5e71, type: 3}
+  _audioConfig: {fileID: 11400000, guid: 97d0218a8ec95714f906d2e94639559a, type: 2}
 --- !u!114 &3704142420045537211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,7 +753,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 49fd8f26329a7d447b6232131cfd5e71, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.05
+  m_Volume: 0.01
   m_Pitch: 1
   Loop: 0
   Mute: 0

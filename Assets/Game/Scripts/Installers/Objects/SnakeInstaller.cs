@@ -43,7 +43,7 @@ public sealed class SnakeInstaller : MonoInstaller
     private AudioSource _audioSource;
 
     [SerializeField]
-    private AudioClip _audioClip;
+    private AudioConfig _audioConfig;
 
     public override void InstallBindings()
     {
@@ -51,19 +51,18 @@ public sealed class SnakeInstaller : MonoInstaller
         Container.Bind<Rigidbody2D>().FromInstance(_rb).AsSingle();
 
         Container.BindInterfacesAndSelfTo<RotateComponent>().FromInstance(new RotateComponent(_rootTransform)).AsSingle();
-        Container.Bind<AudioComponent>().FromInstance(new AudioComponent(_audioClip, _audioSource)).AsSingle();
+        Container.Bind<AudioComponent>().FromInstance(new AudioComponent(_audioConfig, _audioSource)).AsSingle();
         MoveInstaller.Install(Container, _moveSpeed, _wayPoints, _rootTransform);
         LifeInstaller.Install(Container, _maxPoints, _hitPoints);        
-        TossInstaller.Install(Container, _forceToss, _distanceToToss, _tossCooldown);
-        Container.BindInterfacesAndSelfTo<TimerComponent>().FromInstance(new TimerComponent()).AsSingle();
+        TossInstaller.Install(Container, _forceToss, _distanceToToss, _tossCooldown);        
 
         if (TryGetComponent(out Entity entity))
         {            
             Container.Bind<EntityProvider>().FromInstance(new EntityProvider(entity)).AsSingle();
-            Container.BindInterfacesTo<EntityLifeObserver>().AsCached().NonLazy();
-            Container.BindInterfacesTo<EntityCollisionListener>().AsCached().NonLazy();
-            Container.BindInterfacesTo<DamageController>().AsCached().NonLazy();
+            Container.BindInterfacesTo<EntityLifeController>().AsCached().NonLazy();
             Container.Bind<EntityCollisionFacade>().FromInstance(_entityCollisionFacade).AsSingle();
+            Container.BindInterfacesAndSelfTo<EntityDamageController>().AsCached().NonLazy();
+            Container.BindInterfacesAndSelfTo<EntityInteractListener>().AsCached().NonLazy();   
             Container.BindInterfacesTo<SnakeRotateController>().AsCached().NonLazy();
         }
     }

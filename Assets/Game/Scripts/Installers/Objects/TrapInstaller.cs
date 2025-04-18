@@ -29,8 +29,8 @@ public sealed class TrapInstaller : MonoInstaller
         if (TryGetComponent(out Entity entity))
         {
             Container.Bind<EntityProvider>().FromInstance(new EntityProvider(entity)).AsSingle();
-            Container.BindInterfacesTo<EntityLifeObserver>().AsCached().NonLazy();
-            Container.BindInterfacesTo<DamageController>().AsCached().NonLazy();
+            Container.BindInterfacesTo<EntityLifeController>().AsCached().NonLazy();
+            Container.BindInterfacesTo<EntityDamageController>().AsCached().NonLazy();
         }
     }
 }

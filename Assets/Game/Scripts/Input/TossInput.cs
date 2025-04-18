@@ -4,7 +4,7 @@ using Zenject;
 
 public sealed class TossInput : ITossInput, ITickable
 {
-    public event Action<Vector2> OnInputInvoked;
+    public event Action OnInputInvoked;
 
     private readonly InputMap _inputMap;
 
@@ -16,6 +16,6 @@ public sealed class TossInput : ITossInput, ITickable
     void ITickable.Tick()
     {
         if (Input.GetKeyDown(_inputMap.Toss))
-            OnInputInvoked?.Invoke(Vector2.up);
+            OnInputInvoked?.Invoke();
     }
 }

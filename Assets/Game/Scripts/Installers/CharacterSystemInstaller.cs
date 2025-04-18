@@ -25,7 +25,7 @@ public sealed class CharacterSystemInstaller : Installer<Entity, Transform, Char
                 return new EntityProvider(character);
             })
             .AsSingle();
-                
+               
         Container.BindInterfacesTo<CharacterMoveController>().AsCached().NonLazy();
 
         Container.BindInterfacesTo<CharacterRotateController>().AsCached().NonLazy();
@@ -37,8 +37,8 @@ public sealed class CharacterSystemInstaller : Installer<Entity, Transform, Char
         Container.BindInterfacesTo<CharacterPushController>().AsCached().NonLazy();
 
         Container.BindInterfacesTo<CharacterTossController>().AsCached().NonLazy();
-
-        Container.BindInterfacesTo<EntityLifeObserver>().AsCached().NonLazy();
+               
+        Container.BindInterfacesTo<EntityLifeController>().AsCached().NonLazy();
                 
         Container.BindInterfacesAndSelfTo<EnemyManager>().
             FromInstance(new EnemyManager())

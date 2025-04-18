@@ -343,8 +343,8 @@ MonoBehaviour:
   _rootTransform: {fileID: 3105770917179402914}
   _rb: {fileID: 4015829716640782646}
   _forcePush: 10
-  _distanceToPush: 4
-  _pushCooldown: 2
+  _distanceToPush: 0
+  _pushCooldown: 0
   _entityCollisionFacade: {fileID: 7827724716113684840}
 --- !u!114 &1881656024422588991
 MonoBehaviour:
@@ -618,7 +618,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.375}

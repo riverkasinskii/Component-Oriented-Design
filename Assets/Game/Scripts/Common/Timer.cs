@@ -1,32 +1,72 @@
 using System;
 using UnityEngine;
 
-public class Timer
-{    
+public sealed class Timer
+{
     public event Action<float> TimerValueChanged;
     public event Action<bool> TimerStarted;
-    public event Action<bool> TimerFinished;       
+    public event Action<bool> TimerFinished;
+
     public bool IsActive { get; private set; }
-    public bool IsPaused { get; private set; }
-    public float RemainingSeconds { get; private set; }
-       
-    public Timer()
-    {
+    public bool IsPaused { get; private set; }    
 
-    }
-
-    public void SetTime(float seconds)
-    {        
-        RemainingSeconds = seconds;
-        TimerValueChanged?.Invoke(RemainingSeconds);
-    }
-
-    public void Start()
+    private float _remainingSeconds;               
+    
+    public void Start(float seconds)
     {
         if (IsActive)
             return;
 
-        if (Math.Abs(RemainingSeconds) < Mathf.Epsilon)
+        SetTime(seconds);
+        StartTimer();
+    }
+        
+    public void Pause()
+    {
+        if (IsPaused || !IsActive)
+            return;
+
+        IsPaused = true;
+
+        TimerValueChanged?.Invoke(_remainingSeconds);
+    }
+
+    public void Unpause()
+    {
+        if (!IsPaused || !IsActive)
+            return;
+
+        IsPaused = false;
+
+        TimerValueChanged?.Invoke(_remainingSeconds);
+    }
+
+    public void Stop()
+    {
+        if (IsActive)
+        {
+            _remainingSeconds = 0f;
+            IsActive = false;
+            IsPaused = false;
+
+            TimerValueChanged?.Invoke(_remainingSeconds);
+            TimerFinished?.Invoke(false);
+        }
+    }
+
+    private void SetTime(float seconds)
+    {
+        _remainingSeconds = seconds;
+        TimerValueChanged?.Invoke(seconds);
+    }
+
+
+    private void StartTimer()
+    {
+        if (IsActive)
+            return;
+
+        if (Math.Abs(_remainingSeconds) < Mathf.Epsilon)
         {
 #if DEBUG
             Debug.LogError("TIMER: You are trying start timer with remaining seconds equal 0.");
@@ -36,56 +76,15 @@ public class Timer
 
         IsActive = true;
         IsPaused = false;
-               
+
         TimerStarted?.Invoke(true);
-        TimerValueChanged?.Invoke(RemainingSeconds);
+
+        TimerValueChanged?.Invoke(_remainingSeconds);
     }
 
-    public void Start(float seconds)
-    {
-        if (IsActive)
-            return;
-
-        SetTime(seconds);
-        Start();        
-    }
-        
-    public void Pause()
-    {
-        if (IsPaused || !IsActive)
-            return;
-
-        IsPaused = true;        
-
-        TimerValueChanged?.Invoke(RemainingSeconds);
-    }
-
-    public void Unpause()
-    {
-        if (!IsPaused || !IsActive)
-            return;
-
-        IsPaused = false;        
-
-        TimerValueChanged?.Invoke(RemainingSeconds);
-    }
-
-    public void Stop()
-    {
-        if (IsActive)
-        {
-            RemainingSeconds = 0f;
-            IsActive = false;
-            IsPaused = false;
-
-            TimerValueChanged?.Invoke(RemainingSeconds);
-            TimerFinished?.Invoke(false);            
-        }
-    }
-        
     private void CheckFinish()
     {
-        if (RemainingSeconds <= 0f)
+        if (_remainingSeconds <= 0f)
         {
             Stop();
         }
@@ -93,15 +92,15 @@ public class Timer
 
     private void NotifyAboutTimePassed()
     {
-        if (RemainingSeconds >= 0f)
+        if (_remainingSeconds >= 0f)
         {
-            TimerValueChanged?.Invoke(RemainingSeconds);
+            TimerValueChanged?.Invoke(_remainingSeconds);
         }
     }
 
-    public void Tick(float deltaTime)
+    public void Tick()
     {
-        RemainingSeconds -= deltaTime;        
+        _remainingSeconds -= Time.deltaTime;        
         NotifyAboutTimePassed();
         CheckFinish();
     }

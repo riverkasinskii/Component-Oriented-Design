@@ -9,7 +9,7 @@ public sealed class CharacterConditionObserver : IInitializable
     private RotateComponent _rotateComponent;
     private GroundComponent _groundComponent;
     private PushComponent _pushComponent;
-    private TossComponent _tossComponent;
+    private TossComponent _tossComponent;   
 
     public CharacterConditionObserver(EntityProvider character)
     {
@@ -24,15 +24,14 @@ public sealed class CharacterConditionObserver : IInitializable
         _rotateComponent = _character.Value.Get<RotateComponent>();
         _groundComponent = _character.Value.Get<GroundComponent>();
         _pushComponent = _character.Value.Get<PushComponent>();
-        _tossComponent = _character.Value.Get<TossComponent>();
+        _tossComponent = _character.Value.Get<TossComponent>();        
 
-        _moveComponent.AddCondition(_lifeComponent.IsAlive);
-        _moveComponent.AddCondition(_groundComponent.GetGroundState);
+        _moveComponent.AddCondition(_lifeComponent.IsAlive);        
 
         _rotateComponent.AddCondition(_lifeComponent.IsAlive);
 
         _jumpComponent.AddCondition(_lifeComponent.IsAlive);
-        _jumpComponent.AddCondition(_groundComponent.GetGroundState);
+        _jumpComponent.AddCondition(_groundComponent.GetGroundState);        
 
         _pushComponent.AddCondition(_lifeComponent.IsAlive);
 

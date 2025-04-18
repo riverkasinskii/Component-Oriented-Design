@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public sealed class EntityLifeObserver : IInitializable, IDisposable
+public sealed class EntityLifeController : IInitializable, IDisposable
 {
     private readonly EntityProvider _entityProvider;
     private GameObject _gameObject;
     private LifeComponent _lifeComponent;    
 
-    public EntityLifeObserver(EntityProvider entityProvider)
+    public EntityLifeController(EntityProvider entityProvider)
     {        
         _entityProvider = entityProvider;        
     }
@@ -31,7 +31,7 @@ public sealed class EntityLifeObserver : IInitializable, IDisposable
     {        
         if (_entityProvider.Value.TryGet(out AudioComponent audioComponent))
         {
-            audioComponent.PlayOneShot();
+            audioComponent.PlayOneShot(AudioData.TakeDamageEnemy);
         }        
     }
 

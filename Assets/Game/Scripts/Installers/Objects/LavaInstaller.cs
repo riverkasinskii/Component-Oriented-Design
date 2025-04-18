@@ -10,6 +10,7 @@ public sealed class LavaInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<EntityCollisionFacade>().FromInstance(_entityCollisionFacade).AsSingle();
-        Container.BindInterfacesTo<DamageController>().AsCached().NonLazy();
+        Container.BindInterfacesAndSelfTo<EntityDamageController>().AsCached().NonLazy();
+        Container.BindInterfacesAndSelfTo<LavaAudioController>().AsCached().NonLazy();
     }
 }

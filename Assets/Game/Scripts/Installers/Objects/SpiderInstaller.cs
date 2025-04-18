@@ -46,15 +46,14 @@ public sealed class SpiderInstaller : MonoInstaller
         MoveInstaller.Install(Container, _moveSpeed, _wayPoints, _rootTransform);
         LifeInstaller.Install(Container, _maxPoints, _hitPoints);
         PushInstaller.Install(Container, _forcePush, _distanceToPush, _pushCooldown);
-        Container.BindInterfacesAndSelfTo<TimerComponent>().FromInstance(new TimerComponent()).AsSingle();
-
+        
         if (TryGetComponent(out Entity entity))
         {
             Container.Bind<Rigidbody2D>().FromInstance(_rb).AsSingle();
             Container.Bind<EntityProvider>().FromInstance(new EntityProvider(entity)).AsSingle();
-            Container.BindInterfacesTo<EntityLifeObserver>().AsCached().NonLazy();
-            Container.BindInterfacesTo<EntityCollisionListener>().AsCached().NonLazy();
-            Container.BindInterfacesTo<DamageController>().AsCached().NonLazy();
+            Container.BindInterfacesTo<EntityLifeController>().AsCached().NonLazy();            
+            Container.BindInterfacesAndSelfTo<EntityDamageController>().AsCached().NonLazy();
+            Container.BindInterfacesAndSelfTo<EntityInteractListener>().AsCached().NonLazy();
         }
     }
 }

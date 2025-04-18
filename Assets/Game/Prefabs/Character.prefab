@@ -369,13 +369,13 @@ MonoBehaviour:
   _moveSpeed: 5
   jumpForce: 20
   coolDown: 4
-  _forcePush: 5
+  _forcePush: 10
   _distanceToPush: 4
-  _pushCooldown: 2
+  _pushCooldown: 3
   _forceToss: 10
   _distanceToToss: 3
-  _tossCooldown: 3
-  _jump: {fileID: 8300000, guid: 4a3d24c7a7d02497a9aa7b0018822e35, type: 3}
+  _tossCooldown: 6
+  _audioConfig: {fileID: 11400000, guid: 97d0218a8ec95714f906d2e94639559a, type: 2}
   _audioSource: {fileID: 3053905989913550054}
 --- !u!114 &8378413169101707238
 MonoBehaviour:

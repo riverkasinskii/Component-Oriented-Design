@@ -1991,6 +1991,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Snake
       objectReference: {fileID: 0}
+    - target: {fileID: 6630584940079141506, guid: 80a831c9d00f24f04b83b56403d7f261, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7302201298826456237, guid: 80a831c9d00f24f04b83b56403d7f261, type: 3}
       propertyPath: m_LocalPosition.x
       value: 110.443
@@ -4931,6 +4935,10 @@ PrefabInstance:
     - target: {fileID: 6630584940079141506, guid: 80a831c9d00f24f04b83b56403d7f261, type: 3}
       propertyPath: m_Name
       value: Snake
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630584940079141506, guid: 80a831c9d00f24f04b83b56403d7f261, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7302201298826456237, guid: 80a831c9d00f24f04b83b56403d7f261, type: 3}
       propertyPath: m_LocalPosition.x

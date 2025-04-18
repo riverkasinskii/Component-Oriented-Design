@@ -2,11 +2,13 @@
 using UnityEngine;
 using Zenject;
 
-public sealed class DamageController : IInitializable, IDisposable
-{    
+public sealed class EntityDamageController : IInitializable, IDisposable
+{
+    public event Action<GameObject, Collider2D> OnDamaged;
+
     private readonly EntityCollisionFacade _entityCollisionFacade;    
     
-    public DamageController(EntityCollisionFacade entityCollisionFacade)
+    public EntityDamageController(EntityCollisionFacade entityCollisionFacade)
     {        
         _entityCollisionFacade = entityCollisionFacade;       
     }
@@ -21,15 +23,17 @@ public sealed class DamageController : IInitializable, IDisposable
         _entityCollisionFacade.OnTakeDamaged -= TakeDamage;
     }
 
-    private void TakeDamage(Collider2D collision, int damage)
+    private void TakeDamage(GameObject currentEntity, Collider2D collision, int damage)
     {        
         if (collision.gameObject.TryGetComponent(out IEntity target) && target.TryGet(out LifeComponent lifeComponent))
         {
             lifeComponent.TakeDamage(damage);
+            OnDamaged?.Invoke(currentEntity, collision);
         }
         if (collision.gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.TakeDamage(damage);
+            OnDamaged?.Invoke(currentEntity, collision);
         }
     }
 }

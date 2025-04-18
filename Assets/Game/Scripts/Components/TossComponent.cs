@@ -19,23 +19,27 @@ public sealed class TossComponent : InteractComponent
         TossCooldown = tossCooldown;
     }
 
-    public void Toss(IEntity entity)
+    public void TryToss(IEntity entity)
     {
         if (_condition.IsTrue() && !IsCooldown)
         {
-            var rb = entity.Get<Rigidbody2D>();
-            Interact(rb, _forceToss, Vector2.up);            
+            Toss(entity);
+        }
+    }
+        
+    public void TryToss(List<Entity> targets, Transform transform)
+    {
+        var entity = TryGetInteractObject(targets, transform.position, _distanceToToss);
+        if (_condition.IsTrue() && entity != null && !IsCooldown)
+        {
+            Toss(entity);
         }
     }
 
-    public void Toss(List<Entity> targets, Transform transform, Vector2 direction)
+    private void Toss(IEntity entity)
     {
-        var target = TryGetInteractObject(targets, transform.position, _distanceToToss);
-        if (_condition.IsTrue() && target != null && !IsCooldown)
-        {
-            var rb = target.Get<Rigidbody2D>();
-            Interact(rb, _forceToss, direction);                        
-            OnTossed?.Invoke();
-        }
-    }  
+        var rb = entity.Get<Rigidbody2D>();
+        Interact(rb, _forceToss, Vector2.up);
+        OnTossed?.Invoke();
+    }
 }

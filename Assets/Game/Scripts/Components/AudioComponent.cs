@@ -2,17 +2,20 @@ using UnityEngine;
 
 public sealed class AudioComponent
 {
-    private readonly AudioClip _audioClip;
+    private readonly AudioConfig _audioConfig;
     private readonly AudioSource _audioSource;
 
-    public AudioComponent(AudioClip audioClip, AudioSource audioSource)
+    public AudioComponent(AudioConfig audioConfig, AudioSource audioSource)
     {
-        _audioClip = audioClip;
+        _audioConfig = audioConfig;
         _audioSource = audioSource;
     }
-
-    public void PlayOneShot() 
-        => _audioSource.PlayOneShot(_audioClip);
+        
+    public void PlayOneShot(AudioData data)
+    {
+        AudioClip clip = _audioConfig.GetAudioClip(data);
+        _audioSource.PlayOneShot(clip);
+    }
 
     public void Play() 
         => _audioSource.Play();

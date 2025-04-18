@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using Zenject;
 
@@ -43,7 +46,7 @@ public sealed class CharacterInstaller : MonoInstaller
 
     [Header("Audio Component")]
     [SerializeField]
-    private AudioClip _jump;
+    private AudioConfig _audioConfig;
 
     [SerializeField]
     private AudioSource _audioSource;
@@ -56,13 +59,13 @@ public sealed class CharacterInstaller : MonoInstaller
         MoveInstaller.Install(Container, _moveSpeed, null, gameObject.transform);
         PushInstaller.Install(Container, _forcePush, _distanceToPush, _pushCooldown);
         TossInstaller.Install(Container, _forceToss, _distanceToToss, _tossCooldown);
-
+                
         Container.Bind<RotateComponent>().AsSingle().WithArguments(gameObject.transform);
 
         Container.BindInterfacesAndSelfTo<JumpComponent>().AsSingle().WithArguments(jumpForce, coolDown);                        
 
         Container.BindInterfacesAndSelfTo<GroundComponent>().AsSingle();
 
-        Container.Bind<AudioComponent>().FromInstance(new AudioComponent(_jump, _audioSource)).AsSingle();
+        Container.Bind<AudioComponent>().FromInstance(new AudioComponent(_audioConfig, _audioSource)).AsSingle();
     }
 }
